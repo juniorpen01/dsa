@@ -15,6 +15,7 @@ func TestSorts(t *testing.T) {
 		{"Bubble Sort", sort.BubbleSort},
 		{"Merge Sort", sort.MergeSort},
 		{"Insertion Sort", sort.InsertionSort},
+		{"Quick Sort", sort.QuickSort},
 		{"Selection Sort", sort.SelectionSort},
 	}
 
