@@ -14,7 +14,7 @@ func MergeSort(data []int) []int {
 }
 
 func merge(l, r []int) []int {
-	final := []int{}
+	final := make([]int, 0, len(l)+len(r))
 
 	var i, j int
 

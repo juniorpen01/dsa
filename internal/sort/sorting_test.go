@@ -15,6 +15,7 @@ func TestSorts(t *testing.T) {
 		{"Bubble Sort", sort.BubbleSort},
 		{"Merge Sort", sort.MergeSort},
 		{"Insertion Sort", sort.InsertionSort},
+		{"Selection Sort", sort.SelectionSort},
 	}
 
 	for _, c := range cases {
