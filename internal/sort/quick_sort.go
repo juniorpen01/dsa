@@ -15,13 +15,14 @@ func quickSort(data []int, low, high int) {
 
 func partition(data []int, low, high int) int {
 	pivot := data[high]
-	i := low
+	i := low - 1
 	for j := low; j < high; j++ {
 		if data[j] < pivot {
-			data[i], data[j] = data[j], data[i]
 			i++
+			data[i], data[j] = data[j], data[i]
 		}
 	}
+	i++
 	data[i], data[high] = data[high], data[i]
 	return i
 }
