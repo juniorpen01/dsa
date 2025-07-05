@@ -1,22 +1,46 @@
 package datastructures
 
-type Node struct {
-	val  int
-	next *Node
+type LinkedList struct {
+	head *Node
 }
 
-func NewNode(val int) Node {
-	return Node{val, nil}
+func (l *LinkedList) AddToHead(node Node) {
+	node.SetNext(*l.Head())
+	l.SetHead(node)
 }
 
-func (n *Node) Val() int {
-	return n.val
+func (l *LinkedList) RemoveFromHead() *Node {
+	if l.Head() == nil {
+		return nil
+	}
+
+	poppedNode := *l.Head()
+
+	if l.Head().Next() == nil {
+		l.head = nil
+	} else {
+		l.SetHead(*l.Head().Next())
+	}
+
+	return &poppedNode
 }
 
-func (n *Node) Next() *Node {
-	return n.next
+func (l *LinkedList) AddToTail(node Node) {
+	if l.Head() == nil {
+		l.SetHead(node)
+		return
+	}
+	var last *Node
+	for cur := l.Head(); cur != nil; cur = cur.Next() {
+		last = cur
+	}
+	last.SetNext(node)
 }
 
-func (n *Node) SetNext(node Node) {
-	n.next = &node
+func (l LinkedList) Head() *Node {
+	return l.head
+}
+
+func (l *LinkedList) SetHead(node Node) {
+	l.head = &node
 }

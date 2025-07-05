@@ -6,45 +6,62 @@ import (
 	datastructures "github.com/juniorpen01/dsa/internal/data_structures"
 )
 
-func TestNodePush(t *testing.T) {
+func TestLinkedListAdd(t *testing.T) {
 	cases := []struct {
-		input    int
-		expected []int
+		input  int
+		action string
 	}{
-		{1, []int{0, 1}},
-		{2, []int{0, 1, 2}},
-		{3, []int{0, 1, 2, 3}},
-		{4, []int{0, 1, 2, 3, 4}},
-		{5, []int{0, 1, 2, 3, 4, 5}},
+		{1, "tail"}, {2, "tail"}, {3, "tail"}, {4, "tail"}, {5, "tail"},
+		{1, "head"}, {2, "head"}, {3, "head"}, {4, "head"}, {5, "head"},
 	}
 
-	linkedList := datastructures.NewNode(0)
-	newNode := &linkedList
+	var linkedList datastructures.LinkedList
 
 	for _, c := range cases {
-		newNode.SetNext(datastructures.NewNode(c.input))
-		newNode = newNode.Next()
+		switch c.action {
+		case "head":
+			linkedList.AddToHead(datastructures.NewNode(c.input))
 
-		// Test
-		currentNode := &linkedList
-		for i := range len(c.expected) {
-			if actual, expected := currentNode.Val(), c.expected[i]; actual != expected {
+			if actual, expected := linkedList.Head().Val(), c.input; actual != expected {
 				t.Errorf("Expected value does not match actual value: expected %d, got %d", expected, actual)
 			}
-			if currentNode.Next() == nil {
-				break
-			} else {
-				currentNode = currentNode.Next()
+		case "tail":
+			linkedList.AddToTail(datastructures.NewNode(c.input))
+
+			var last datastructures.Node
+			for cur := linkedList.Head(); cur != nil; cur = cur.Next() {
+				last = *cur
+			}
+
+			if actual, expected := last.Val(), c.input; actual != expected {
+				t.Errorf("Expected value does not match actual value: expected %d, got %d", expected, actual)
 			}
 		}
+	}
+}
 
+func TestLinkedListRemoveFromHead(t *testing.T) {
+	cases := []struct {
+		input int
+	}{
+		// {1, "tail"}, {2, "tail"}, {3, "tail"}, {4, "tail"}, {5, "tail"},
+		{1}, {2}, {3}, {4}, {5},
 	}
 
-	for true {
-		t.Log(linkedList.Val())
-		if linkedList.Next() == nil {
-			break
+	var linkedList datastructures.LinkedList
+
+	// Setup
+	for _, c := range cases {
+		linkedList.AddToTail(datastructures.NewNode(c.input))
+	}
+
+	// Test
+	cur := linkedList.RemoveFromHead()
+
+	for _, c := range cases {
+		if actual, expected := cur.Val(), c.input; actual != expected {
+			t.Errorf("Expected value does not match actual value: expected %d, got %d", expected, actual)
 		}
-		linkedList = *linkedList.Next()
+		cur = linkedList.RemoveFromHead()
 	}
 }
