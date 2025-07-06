@@ -80,6 +80,33 @@ func (b *BSTNode) Inorder(visited *[]int) []int {
 	return *visited
 }
 
+func (b *BSTNode) Exists(val int) bool {
+	if b == nil {
+		return false
+	}
+
+	switch {
+	case b.val > val:
+		return b.left.Exists(val)
+	case b.val < val:
+		return b.right.Exists(val)
+	default:
+		return true
+	}
+}
+func (b *BSTNode) Height() int {
+	if b == nil {
+		return 0
+	}
+	l := 1 + b.left.Height()
+	r := 1 + b.right.Height()
+	if l > r {
+		return l
+	} else {
+		return r
+	}
+}
+
 func (b *BSTNode) Min() int {
 	min := 0
 	for cur := b; cur != nil; cur = cur.left {

@@ -106,8 +106,8 @@ func TestBSTNodeDelete(t *testing.T) {
 
 	root := datastructures.NewBSTNode(0)
 
-	for _, c := range []int{-1, 1, -2, 2, 3, -3, 4, -4, -5, 5} {
-		root.Insert(c)
+	for _, val := range []int{-1, 1, -2, 2, 3, -3, 4, -4, -5, 5} {
+		root.Insert(val)
 	}
 
 	for _, c := range cases {
@@ -173,4 +173,46 @@ func TestBSTNodePostorder(t *testing.T) {
 			t.Errorf("Expected data does not match actual data: expected %v, got %v", expected, actual)
 		}
 	}
+}
+
+func TestBSTNodeExists(t *testing.T) {
+	cases := []struct {
+		input    int
+		expected bool
+	}{{-3, true}, {2, true}, {6, false}, {727, false}}
+
+	root := datastructures.NewBSTNode(0)
+
+	for _, val := range []int{-1, 1, -2, 2, 3, -3, 4, -4, -5, 5} {
+		root.Insert(val)
+	}
+
+	for _, c := range cases {
+		if actual, expected := root.Exists(c.input), c.expected; actual != expected {
+			t.Errorf("Expected does not match actual: expected %t, got %t", expected, actual)
+		}
+	}
+}
+
+func TestBSTNodeHeight(t *testing.T) {
+	cases := []struct {
+		input    []int
+		expected int
+	}{
+		{[]int{-1, 1, -2, 2, 3, -3, 4, -4, -5, 5}, 6},
+		{[]int{-2, 1, -3, 4, 2, -5, 5, -4, -1, 3}, 5},
+	}
+
+	for _, c := range cases {
+		root := datastructures.NewBSTNode(0)
+
+		for _, val := range c.input {
+			root.Insert(val)
+		}
+
+		if actual, expected := root.Height(), c.expected; actual != expected {
+			t.Errorf("Expected height does not match actual height: expected %d, got %d", expected, actual)
+		}
+	}
+
 }
