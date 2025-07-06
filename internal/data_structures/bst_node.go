@@ -70,6 +70,16 @@ func (b *BSTNode) Postorder(visited *[]int) []int {
 	return *visited
 }
 
+func (b *BSTNode) Inorder(visited *[]int) []int {
+	if b == nil {
+		return *visited
+	}
+	b.left.Inorder(visited)
+	*visited = append(*visited, b.val)
+	b.right.Inorder(visited)
+	return *visited
+}
+
 func (b *BSTNode) Min() int {
 	min := 0
 	for cur := b; cur != nil; cur = cur.left {
