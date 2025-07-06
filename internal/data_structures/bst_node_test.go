@@ -47,3 +47,41 @@ func TestBSTNodeInsert(t *testing.T) {
 		cur = cur.Right()
 	}
 }
+
+func TestBSTNodeMax(t *testing.T) {
+	cases := struct {
+		input    []int
+		expected int
+	}{
+		[]int{-2, 1, -3, 4, 2, -5, 5, -4, -1, 3}, 5,
+	}
+
+	root := datastructures.NewBSTNode(0)
+
+	for _, c := range cases.input {
+		root.Insert(c)
+	}
+
+	if actual, expected := root.Max(), cases.expected; actual != expected {
+		t.Errorf("Expected value does not match actual value: expected %d, got %d", expected, actual)
+	}
+}
+
+func TestBSTNodeMin(t *testing.T) {
+	cases := struct {
+		input    []int
+		expected int
+	}{
+		[]int{-2, 1, -3, 4, 2, -5, 5, -4, -1, 3}, -5,
+	}
+
+	root := datastructures.NewBSTNode(0)
+
+	for _, c := range cases.input {
+		root.Insert(c)
+	}
+
+	if actual, expected := root.Min(), cases.expected; actual != expected {
+		t.Errorf("Expected value does not match actual value: expected %d, got %d", expected, actual)
+	}
+}
