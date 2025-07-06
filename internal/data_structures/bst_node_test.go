@@ -1,6 +1,7 @@
 package datastructures_test
 
 import (
+	"slices"
 	"testing"
 
 	datastructures "github.com/juniorpen01/dsa/internal/data_structures"
@@ -128,6 +129,27 @@ func TestBSTNodeDelete(t *testing.T) {
 				t.Errorf("Expected value does not match actual value: expected %d, got %d", expected, actual)
 			}
 			cur = cur.Right()
+		}
+	}
+}
+
+func TestBSTNodePreorder(t *testing.T) {
+	cases := []struct {
+		input, expected []int
+	}{
+		{[]int{-1, 1, -2, 2, 3, -3, 4, -4, -5, 5}, []int{0, -1, -2, -3, -4, -5, 1, 2, 3, 4, 5}},
+		{[]int{-2, 1, -3, 4, 2, -5, 5, -4, -1, 3}, []int{0, -2, -3, -5, -4, -1, 1, 4, 2, 3, 5}},
+	}
+
+	for _, c := range cases {
+		root := datastructures.NewBSTNode(0)
+		for _, val := range c.input {
+			root.Insert(val)
+		}
+
+		var arr []int
+		if actual, expected := root.Preorder(&arr), c.expected; !slices.Equal(actual, expected) {
+			t.Errorf("Expected data does not match actual data: expected %v, got %v", expected, actual)
 		}
 	}
 }

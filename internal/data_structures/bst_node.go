@@ -50,6 +50,16 @@ func (b *BSTNode) Delete(val int) *BSTNode {
 	return b
 }
 
+func (b *BSTNode) Preorder(visited *[]int) []int {
+	if b == nil {
+		return *visited
+	}
+	*visited = append(*visited, b.val)
+	b.left.Preorder(visited)
+	b.right.Preorder(visited)
+	return *visited
+}
+
 func (b *BSTNode) Min() int {
 	min := 0
 	for cur := b; cur != nil; cur = cur.left {
