@@ -28,6 +28,28 @@ func (b *BSTNode) Insert(val int) {
 	}
 }
 
+func (b *BSTNode) Delete(val int) *BSTNode {
+	switch {
+	case b.val > val:
+		b.left.Delete(val)
+	case b.val < val:
+		b.right.Delete(val)
+	default:
+		switch {
+		case b.left == nil:
+			return b.right
+		case b.right == nil:
+			return b.left
+		default:
+			min := b.right.Min()
+			b.val = min
+			b.right.Delete(min)
+		}
+	}
+
+	return b
+}
+
 func (b *BSTNode) Min() int {
 	min := 0
 	for cur := b; cur != nil; cur = cur.left {

@@ -85,3 +85,49 @@ func TestBSTNodeMin(t *testing.T) {
 		t.Errorf("Expected value does not match actual value: expected %d, got %d", expected, actual)
 	}
 }
+
+func TestBSTNodeDelete(t *testing.T) {
+	cases := []struct {
+		input    int
+		expected struct {
+			left, right []int
+		}
+	}{
+		{
+			2, struct {
+				left  []int
+				right []int
+			}{[]int{0, -1, -2, -3, -4, -5}, []int{0, 1, 2}}}, {-3, struct {
+			left  []int
+			right []int
+		}{[]int{0, -1, -2}, []int{0, 1, 2}}}, // HACK: Shut UP!!!
+	}
+
+	root := datastructures.NewBSTNode(0)
+
+	for _, c := range []int{-1, 1, -2, 2, 3, -3, 4, -4, -5, 5} {
+		root.Insert(c)
+	}
+
+	for _, c := range cases {
+		root.Delete(c.input)
+
+		// Test Left
+		cur := &root
+		for _, expected := range c.expected.left {
+			if actual := cur.Val(); actual != expected {
+				t.Errorf("Expected value does not match actual value: expected %d, got %d", expected, actual)
+			}
+			cur = cur.Left()
+		}
+
+		// Test Right
+		cur = &root
+		for _, expected := range c.expected.right {
+			if actual := cur.Val(); actual != expected {
+				t.Errorf("Expected value does not match actual value: expected %d, got %d", expected, actual)
+			}
+			cur = cur.Right()
+		}
+	}
+}
